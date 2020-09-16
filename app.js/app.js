@@ -1,32 +1,26 @@
 'use strict';
 
-var productImages = [];
-var totalVotes; 0;
-var maxVotes; 25;
-
-var productList = document.getElementById('productList').select;
-var product1 = document.getElementById('product1');
+Products.productImages = [];
+var totalClicks = 0;
+var maxClicks = 25;
+// var productList = document.getElementById('productList');
 var name1 = document.getElementById('name1');
 var image1 = document.getElementById('image1');
-var count1 = document.getElementById('count1');
-var product2 = document.getElementById('product2');
 var name2 = document.getElementById('name2');
 var image2 = document.getElementById('image2');
-var count2 = document.getElementById('count2');
-var product3 = document.getElementById('product3');
 var name3 = document.getElementById('name3');
 var image3 = document.getElementById('image3');
-var count3 = document.getElementById('count3');
+
 
 
 function Products(name, image) {
   this.name = name;
   this.image = image;
-  this.votes = 0;
+  this.clicks = 0;
   this.timesShown = 0;
-  productImages.push(this);
+  this.previouslySeen = false;
+  Products.productImages.push(this);
 }
-// console.log(Products);
 
 new Products('bag', 'images/bag.jpg');
 new Products('banana', 'images/banana.jpg');
@@ -50,47 +44,98 @@ new Products('water-can', 'images/water-can.jpg');
 new Products('wine-glass', 'images/wine-glass.jpg');
 
 function showRandomImage() {
-  var randomImage = Math.floor(Math.random()* productImages.length);
+  var randomImage = Math.floor(Math.random()* Products.productImages.length);
   return randomImage;
 }
-// console.log(showRandomImage);
 
-var index1 = showRandomImage();
-var index2 = showRandomImage();
-var index3 = showRandomImage();
+function renderImages() {
 
-var product1 = productImages[index1];
-var product2 = productImages[index2];
-var product3 = productImages[index3];
+  // check random numbers are not equal and previous flag = false
 
-product1.id = product1.name;
-name1.textContent = product1.name;
-image1.src = product1.image;
-product2.id = product2.name;
-name2.textContent = product2.name;
-image2.src = product2.image;
-product3.id = product3.name;
-name3.textContent = product3.name;
-image3.src = product3.image;
+  var index1 = showRandomImage();
+  var index2 = showRandomImage();
+
+  while (index1 === index2 && Products.productImages[index1].previouslySeen === false) {
+    index2 = showRandomImage();
+  }
+
+  var index3 = showRandomImage();
+  while (index3 === index1 || index3 === index2 && Products.productImages[index3].previouslySeen === false) {
+    index3 = showRandomImage();
+  }
+  // with 3 values wipe this clean
+  // console.log(Products.productImages);
+
+  for (var i = 0; i < Products.productImages.length; i++){
+    Products.productImages[i].previouslySeen === false;
+  }
+
+  Products.productImages[index1].timesShown++;
+  Products.productImages[index2].timesShown++;
+  Products.productImages[index3].timesShown++;
+  //updating to previously seen as true
+  console.log(Products.productImages[index1].timesShown);
+  Products.productImages[index1].previouslySeen === true;
+  Products.productImages[index2].previouslySeen === true;
+  Products.productImages[index3].previouslySeen === true;
+
+  var product1 = Products.productImages[index1];
+  var product2 = Products.productImages[index2];
+  var product3 = Products.productImages[index3];
+
+  product1.id = product1.name;
+  name1.textContent = product1.name;
+  image1.src = product1.image;
+  product2.id = product2.name;
+  name2.textContent = product2.name;
+  image2.src = product2.image;
+  product3.id = product3.name;
+  name3.textContent = product3.name;
+  image3.src = product3.image;
+}
+
+//create an element go through 4 loop that goes through product array
+//flags- in constructor function add property- this.previouslySeen = false, in render function 3 images set property to false add && opperator this.previouslySeen = false. single loop through array set all flags to false, after set 3 products to true
 
 function handleClick(event) {
-  var userVotes = productList.addEventListener('click', handleClick);
-  userVotes += 1;
-  if (userVotes > 25)
-    productList.removeEventListener('click', handleClick);
-//   console.log(handleClick);
-
-  var product = event.target.parentElement.getAttribute('id');
-
-  for (var i = 0; i < productList.length; i++) {
-    if(product === productList[i].name) {
-      productList[i].votes+=1;
-      event.target.parentElement.children[3].textContent = productList[i].votes;
+  event.preventDefault();
+  var clickedItems = event.target.attributes[1].value;
+  console.log(totalClicks, "totalClickCount");
+  if (totalClicks === maxClicks) {
+    image1.removeEventListener('click', handleClick);
+    image2.removeEventListener('click', handleClick);
+    image3.removeEventListener('click', handleClick);
+    image1.style.display = 'none';
+    image2.style.display = 'none';
+    image3.style.display = 'none';
+    displayItemResults();
+  }
+  totalClicks++;
+  for (var i = 0; i < Products.productImages.length; i++) {
+    if (Products.productImages[i].image === clickedItems){
+      Products.productImages[i].clicks += 1;
+      console.log(Products.productImages[i].clicks);
     }
+  }
+  renderImages();
+
 }
-return userVotes;
+
+
+
+
+
+function displayItemResults() {
+  var listElements = document.getElementById('displayProducts');
+  for (var i = 0; i < Products.productImages.length; i++) {
+    var listItem = document.createElement('li');
+    listItem.textContent = Products.productImages[i].clicks + 'clicks for' + Products.productImages[i].name;
+    listElements.appendChild(listItem);
+  }
 }
-// document.getElementById("productlist").select();
-// Products.prototype.render = function() {
-//     var
-// }
+
+
+image1.addEventListener('click', handleClick);
+image2.addEventListener('click', handleClick);
+image3.addEventListener('click', handleClick);
+renderImages();
