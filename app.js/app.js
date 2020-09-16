@@ -122,9 +122,6 @@ function handleClick(event) {
 }
 
 
-
-
-
 function displayItemResults() {
   var listElements = document.getElementById('displayProducts');
   for (var i = 0; i < Products.productImages.length; i++) {
@@ -139,3 +136,83 @@ image1.addEventListener('click', handleClick);
 image2.addEventListener('click', handleClick);
 image3.addEventListener('click', handleClick);
 renderImages();
+
+
+var canvasElement = document.getElementById('myChart')
+var ctx = canvasElement.getContext('2d');
+
+var namesArray = [];
+var clicksArray =[];
+for (var i = 0; i < Products.productImages.length; i++) {
+  clicksArray[i] = Products.productImages[i].totalClicks;
+  namesArray[i] = Products.productImages[i].name
+}
+
+var chartConfig = chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: namesArray,
+
+    datasets: [{
+      label:'# of Votes',
+
+      data: clicksArray,
+      backgroundColor: [
+        'rgba(255, 99 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, `159, 64, 0.2)',
+        'rgba(255, 99 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, `159, 64, 0.2)',
+        'rgba(255, 99 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, `159, 64, 0.2)',
+        'rgba(255, 99 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255, 99 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, `159, 64, 0.2)',
+        'rgba(255, 99 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, `159, 64, 0.2)',
+        'rgba(255, 99 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, `159, 64, 0.2)',
+        'rgba(255, 99 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)'
+      ],
+      borderWidth: 1
+    }]
+  },
+  option: {
+    scales: {
+      yAxes:[{
+        ticks: [
+          // beginAtZero: true
+        ]
+      }]
+    }
+  }
+});
+
+var chart = new Chart(ctx, chartConfig)
