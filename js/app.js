@@ -3,7 +3,7 @@
 Products.productImages = [];
 var totalClicks = 0;
 var maxClicks = 25;
-// var productList = document.getElementById('productList');
+var clicksArray = [];
 var name1 = document.getElementById('name1');
 var image1 = document.getElementById('image1');
 var name2 = document.getElementById('name2');
@@ -54,20 +54,22 @@ function renderImages() {
 
   var index1 = showRandomImage();
   var index2 = showRandomImage();
-
-  while (index1 === index2 && Products.productImages[index1].previouslySeen === false) {
+  while (Products.productImages[index1].previouslySeen === true) {
+    index1 = showRandomImage();
+  }
+  while (index1 === index2 || Products.productImages[index2].previouslySeen === true) {
     index2 = showRandomImage();
   }
 
   var index3 = showRandomImage();
-  while (index3 === index1 || index3 === index2 && Products.productImages[index3].previouslySeen === false) {
+  while (index3 === index1 || index3 === index2 || Products.productImages[index3].previouslySeen === true) {
     index3 = showRandomImage();
   }
   // with 3 values wipe this clean
   // console.log(Products.productImages);
 
   for (var i = 0; i < Products.productImages.length; i++){
-    Products.productImages[i].previouslySeen === false;
+    Products.productImages[i].previouslySeen = false;
   }
 
   Products.productImages[index1].timesShown++;
@@ -75,9 +77,9 @@ function renderImages() {
   Products.productImages[index3].timesShown++;
   //updating to previously seen as true
   console.log(Products.productImages[index1].timesShown);
-  Products.productImages[index1].previouslySeen === true;
-  Products.productImages[index2].previouslySeen === true;
-  Products.productImages[index3].previouslySeen === true;
+  Products.productImages[index1].previouslySeen = true;
+  Products.productImages[index2].previouslySeen = true;
+  Products.productImages[index3].previouslySeen = true;
 
   var product1 = Products.productImages[index1];
   var product2 = Products.productImages[index2];
@@ -110,6 +112,7 @@ function handleClick(event) {
     image3.style.display = 'none';
     displayItemResults();
     displayTimesShown();
+    storedClicks();
     renderChart();
   }
   totalClicks++;
@@ -120,8 +123,8 @@ function handleClick(event) {
     }
   }
   renderImages();
-
 }
+
 
 function displayItemResults() {
   var listElements = document.getElementById('displayProducts');
@@ -149,12 +152,14 @@ renderImages();
 function renderChart() {
   var ctx = document.getElementById('myChart').getContext('2d');
   var namesArray = [];
-  var clicksArray =[];
+  var timesProductShown = [];
   for (var i = 0; i < Products.productImages.length; i++) {
     clicksArray[i] = Products.productImages[i].clicks;
     namesArray[i] = Products.productImages[i].name;
+    timesProductShown[i] = Products.productImages[i].timesShown;
     console.log(clicksArray);
   }
+  storedClicks();
 
   new Chart(ctx, {
     type: 'bar',
@@ -165,6 +170,55 @@ function renderChart() {
         label:'# of Votes',
 
         data: clicksArray,
+        backgroundColor: [
+          'rgba(255, 99 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(255, `159, 64, 0.2)',
+          'rgba(255, 99 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(255, `159, 64, 0.2)',
+          'rgba(255, 99 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(255, `159, 64, 0.2)',
+          'rgba(255, 99 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(255, `159, 64, 0.2)',
+          'rgba(255, 99 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(255, `159, 64, 0.2)',
+          'rgba(255, 99 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(255, `159, 64, 0.2)',
+          'rgba(255, 99 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: 'number of times shown',
+        data: timesProductShown,
         backgroundColor: [
           'rgba(255, 99 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -227,4 +281,14 @@ function renderChart() {
     }
   });
 }
+
+function storedClicks() {
+  var arrayStoredClicks = JSON.stringify(clicksArray);
+  localStorage.setItem('voterClicks', arrayStoredClicks);
+  var retrieveStoredClicks = localStorage.getItem('voterClicks');
+  var storageClicks= JSON.parse(retrieveStoredClicks);
+  console.log(storageClicks);
+}
+
+
 
