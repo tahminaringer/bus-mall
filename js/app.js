@@ -13,35 +13,45 @@ var image3 = document.getElementById('image3');
 
 
 
-function Products(name, image) {
+function Products(name, image, clicks = 0, timesShown = 0, previouslySeen = false) {
   this.name = name;
   this.image = image;
-  this.clicks = 0;
-  this.timesShown = 0;
-  this.previouslySeen = false;
+  this.clicks = clicks;
+  this.timesShown = timesShown;
+  this.previouslySeen = previouslySeen;
   Products.productImages.push(this);
 }
 
-new Products('bag', 'images/bag.jpg');
-new Products('banana', 'images/banana.jpg');
-new Products('bathroom', 'images/bathroom.jpg');
-new Products('boots', 'images/boots.jpg');
-new Products('breakfast', 'images/breakfast.jpg');
-new Products('bubblegum','images/bubblegum.jpg');
-new Products('chair','images/chair.jpg');
-new Products('cthulhu','images/cthulhu.jpg');
-new Products('dog-duck','images/dog-duck.jpg');
-new Products('dragon','images/dragon.jpg');
-new Products('pen','images/pen.jpg');
-new Products('pet-sweep','images/pet-sweep.jpg');
-new Products('scissors','images/scissors.jpg');
-new Products('shark','images/shark.jpg');
-new Products('sweep', 'images/sweep.png');
-new Products('tauntaun', 'images/tauntaun.jpg');
-new Products('unicorn', 'images/unicorn.jpg');
-new Products('usb', 'images/usb.gif');
-new Products('water-can', 'images/water-can.jpg');
-new Products('wine-glass', 'images/wine-glass.jpg');
+if (localStorage.productData) {
+  var allProductsString = localStorage.getItem('productData');
+  var allProductsData = JSON.parse(allProductsString);
+  for (var i = 0; i < allProductsData.length; i++) {
+    var oldData = allProductsData[i];
+    new Products(oldData.name, oldData.image, oldData.clicks, oldData.timesShown, oldData.previouslySeen)
+  }
+} else {
+  new Products('bag', 'images/bag.jpg');
+  new Products('banana', 'images/banana.jpg');
+  new Products('bathroom', 'images/bathroom.jpg');
+  new Products('boots', 'images/boots.jpg');
+  new Products('breakfast', 'images/breakfast.jpg');
+  new Products('bubblegum','images/bubblegum.jpg');
+  new Products('chair','images/chair.jpg');
+  new Products('cthulhu','images/cthulhu.jpg');
+  new Products('dog-duck','images/dog-duck.jpg');
+  new Products('dragon','images/dragon.jpg');
+  new Products('pen','images/pen.jpg');
+  new Products('pet-sweep','images/pet-sweep.jpg');
+  new Products('scissors','images/scissors.jpg');
+  new Products('shark','images/shark.jpg');
+  new Products('sweep', 'images/sweep.png');
+  new Products('tauntaun', 'images/tauntaun.jpg');
+  new Products('unicorn', 'images/unicorn.jpg');
+  new Products('usb', 'images/usb.gif');
+  new Products('water-can', 'images/water-can.jpg');
+  new Products('wine-glass', 'images/wine-glass.jpg');
+}
+
 
 function showRandomImage() {
   var randomImage = Math.floor(Math.random()* Products.productImages.length);
@@ -115,6 +125,8 @@ function handleClick(event) {
     storedClicks();
     renderChart();
   }
+  localStorage.setItem('productData', JSON.stringify(Products.productImages));
+
   totalClicks++;
   for (var i = 0; i < Products.productImages.length; i++) {
     if (Products.productImages[i].image === clickedItems){
@@ -285,10 +297,8 @@ function renderChart() {
 function storedClicks() {
   var arrayStoredClicks = JSON.stringify(clicksArray);
   localStorage.setItem('voterClicks', arrayStoredClicks);
-  var retrieveStoredClicks = localStorage.getItem('voterClicks');
-  var storageClicks= JSON.parse(retrieveStoredClicks);
-  console.log(storageClicks);
+ 
 }
 
-
+console.log(allProductsData);
 
