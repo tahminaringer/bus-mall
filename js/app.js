@@ -12,7 +12,6 @@ var name3 = document.getElementById('name3');
 var image3 = document.getElementById('image3');
 
 
-
 function Products(name, image, clicks = 0, timesShown = 0, previouslySeen = false) {
   this.name = name;
   this.image = image;
@@ -22,6 +21,7 @@ function Products(name, image, clicks = 0, timesShown = 0, previouslySeen = fals
   Products.productImages.push(this);
 }
 
+//retrieving votes from local storage
 if (localStorage.productData) {
   var allProductsString = localStorage.getItem('productData');
   var allProductsData = JSON.parse(allProductsString);
@@ -75,8 +75,7 @@ function renderImages() {
   while (index3 === index1 || index3 === index2 || Products.productImages[index3].previouslySeen === true) {
     index3 = showRandomImage();
   }
-  // with 3 values wipe this clean
-  // console.log(Products.productImages);
+  // with 3 values wipes this clean
 
   for (var i = 0; i < Products.productImages.length; i++){
     Products.productImages[i].previouslySeen = false;
@@ -107,7 +106,7 @@ function renderImages() {
 }
 
 //create an element go through 4 loop that goes through product array
-//flags- in constructor function add property- this.previouslySeen = false, in render function 3 images set property to false add && opperator this.previouslySeen = false. single loop through array set all flags to false, after set 3 products to true
+//flags- in constructor function add property- this.previouslySeen
 
 function handleClick(event) {
   event.preventDefault();
@@ -160,7 +159,7 @@ image1.addEventListener('click', handleClick);
 image2.addEventListener('click', handleClick);
 image3.addEventListener('click', handleClick);
 renderImages();
-
+//function to loop through all products to create the chart
 function renderChart() {
   var ctx = document.getElementById('myChart').getContext('2d');
   var namesArray = [];
@@ -173,6 +172,7 @@ function renderChart() {
   }
   storedClicks();
 
+  //Creates a bar chart via ChartJS
   new Chart(ctx, {
     type: 'bar',
     data: {
@@ -183,48 +183,48 @@ function renderChart() {
 
         data: clicksArray,
         backgroundColor: [
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)'
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
         ],
         borderColor: [
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)'
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
         ],
         borderWidth: 1
       },
@@ -232,48 +232,48 @@ function renderChart() {
         label: 'number of times shown',
         data: timesProductShown,
         backgroundColor: [
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)'
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
         ],
         borderColor: [
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, `159, 64, 0.2)',
-          'rgba(255, 99 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)'
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
+          ' rgb(135, 60, 114)',
+          'rgb(85, 29, 138)',
+          ' rgb(49, 49, 186)',
+          'rgb(223, 126, 232)',
         ],
         borderWidth: 1
       }]
@@ -293,7 +293,7 @@ function renderChart() {
     }
   });
 }
-
+//stores clicks in localStorage
 function storedClicks() {
   var arrayStoredClicks = JSON.stringify(clicksArray);
   localStorage.setItem('voterClicks', arrayStoredClicks);
